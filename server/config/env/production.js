@@ -5,11 +5,11 @@
 module.exports = {
     port:     process.env.PORT || 8100,
     mysql: {
-        host: 'db',
-        port: '3306',
+        host: 'localhost',
+        port: '3307',
         user: 'root',
-        password: 'root',
-        database:'docker'
+        password: '123456',
+        database:'vi'
     },
     mongo: {
         uri: 'mongodb://localhost:27017/docker-pro'

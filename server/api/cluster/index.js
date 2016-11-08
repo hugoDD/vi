@@ -55,7 +55,7 @@ function formatData(data){
 
   var systemData = data.SystemStatus || data.DriverStatus; //兼容低版本docker engine
   var nodeArray = [];
-  var nodes = parseInt(systemData[3][1]) + 1; //集群节点个数
+  var nodes = parseInt(data.Swarm.Nodes);//parseInt(systemData[3][1]) + 1; //集群节点个数
   var healtynodes = nodes; //健康节点的个数
 
   var totalMemByGB = (parseInt(data.MemTotal) / 1000 / 1000 /1000).toFixed(2);//(GB)

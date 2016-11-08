@@ -382,9 +382,11 @@ module.exports = function(port){
                     promiseDB = new  PromiseDB();
                     promiseDB.connect(function(err){
                         if(err){
+							console.log('mysql err');
                             socket.emit('message', {code : 1, error_msg : err.message, status: err.status || 500 });
                         }else{
                             sendContainerStats = getSendContainerStatsFunc(promiseDB);//此时的promiseDB已经初始化了数据流连接对象connection
+							console.log('sendContainerStats:'+sendContainerStats);
                             sendContainerStats(node, containerId, socket, true);
                         }
                     });

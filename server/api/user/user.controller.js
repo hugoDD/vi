@@ -3,12 +3,12 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Logs = mongoose.model('Logs');
-var ccap = require('ccap')();
+//var ccap = require('ccap')();
 /**
  * 获取验证码
  *
  **/
-
+/**
 exports.getCaptcha = function(req, res) {
 	var ary = ccap.get();
 	var txt = ary[0];
@@ -16,7 +16,7 @@ exports.getCaptcha = function(req, res) {
 	req.session.captcha = txt;
 	return res.status(200).send(buf);
 };
-
+*/
 exports.getMe = function (req, res) {
 	var userId = req.user._id;
 	User.findByIdAsync(userId).then(function (user) {

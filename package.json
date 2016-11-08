@@ -10,7 +10,6 @@
     "bluebird": "^2.10.1",
     "body-parser": "^1.14.0",
     "bunyan": "^1.5.1",
-    "ccap": "^0.6.0",
     "composable-middleware": "^0.3.0",
     "compression": "^1.5.2",
     "connect-mongo": "^0.8.2",

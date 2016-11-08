@@ -13,7 +13,7 @@ router.put('/:id/updateUser', auth.hasRole('admin'), controller.updateUser);
 
 //前台用户更新信息
 router.put('/mdUser', auth.isAuthenticated(), controller.mdUser);
-router.get('/getCaptcha', controller.getCaptcha);
+//router.get('/getCaptcha', controller.getCaptcha);
 
 router.get('/me', auth.isAuthenticated(), controller.getMe);
 
