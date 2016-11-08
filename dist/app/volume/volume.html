@@ -1,0 +1,97 @@
+
+<div ng-if="load.loaded" class="content-body">
+  <div class="panel panel-default panel-page-header">
+    <div class="panel-body">
+      <div class="img-container"><img ng-src="/assets/images/volume-normal.svg" class="img-responsive"/></div>
+      <div class="img-msg">
+        <div class="img-title">
+          <h2>Volume</h2>
+          <div class="sub-title text-muted">容器持久化数据、共享数据的存储空间</div>
+          <button ng-click="createVolume()" tabindex="0" class="btn btn-primary">创建数据卷</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <section class="panel-body">
+      <tabset active="1">
+        <tab index="0" heading="概览">
+          <div class="markdown-body">
+            <p>一个 Volume 就是在一个或者多个容器里有特殊用途的目录。它绕过了容器内部的文件系统为持久化数据、共享数据提供了下面这些有用的特性：</p>
+            <ul>
+              <li>容器可以通过把数据写在 Volume 上来实现数据持久化</li>
+              <li>Volume 可以在不同的容器之间共享和重用数据</li>
+              <li>容器数据的备份、恢复和迁移都可以通过 Volume 实现</li>
+              <li>通过 Volume 实现多容器共享数据，从而实现应用的横向扩展</li>
+            </ul>
+          </div>
+        </tab>
+        <tab index="1" heading="集群Volume" active="isFirst">
+          <div class="volume-toolbar">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <label for="volumeName">volume名称</label>
+                    <input id="volumeName" type="search" ng-model="search.volume.name" ng-keyup="searchVolume()" placeholder="数据卷名称" tabindex="0" class="form-control"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="volumeNode">所在节点(宿主)</label>
+                    <input id="volumeName" type="search" ng-model="search.volume.node" ng-keyup="searchVolume()" placeholder="节点名称" tabindex="0" class="form-control"/>
+                  </div>
+                  <button type="submit" ng-click="searchVolume()" class="btn btn-primary">搜索</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div ng-if="(!volumes.results || volumes.results.length === 0) &amp;&amp; !search.volume.loading" class="alert"><span>Volumes为空或者没有符合条件的Volume</span></div>
+          <div ng-if="search.volume.loading" class="well clear"><span><i class="fa fa-spinner fa-pulse"></i>&nbsp; Loading...<span class="sr-only">| Loading...</span></span></div>
+          <div ng-if="volumes.results.length &gt; 0 &amp;&amp; !search.volume.loading">
+            <div class="volumes-list container-fluid">
+              <div class="row">
+                <div class="volume-heading col-sm-4">名称</div>
+                <div class="volume-heading col-sm-4">所在节点(宿主)</div>
+                <div class="volume-heading col-sm-4">动作</div>
+              </div>
+              <div ng-repeat="volume in volumes.results" class="row volumes clearfix">
+                <div class="volume col-sm-4 flex-vertical-box">{{ volume.name }}</div>
+                <div class="volume col-sm-4 flex-vertical-box">{{ volume.node }}</div>
+                <div class="volume col-sm-4 flex-vertical-box">
+                  <div dropdown="dropdown" class="btn-group">
+                    <button ng-click="viewDetail(volume)" ng-disabled="volume.loading" ng-if="!volume.showDetail" class="btn btn-default">查看详情</button>
+                    <button ng-click="volume.showDetail=!volume.showDetail" ng-disabled="volume.loading" ng-if="volume.showDetail" class="btn btn-default">隐藏</button>
+                    <button dropdown-toggle="dropdown-toggle" class="btn btn-default"><span ng-if="!volume.showDetail" class="fa fa-caret-down"></span><span ng-if="volume.showDetail" class="fa fa-caret-up"></span></button>
+                    <ul dropdown-menu="dropdown-menu" role="menu" class="dropdown-menu">
+                      <li role="menuitem"><a ng-click="removeVolume(volume)">删除</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div ng-if="volume.loading" class="well clear"><span><i class="fa fa-spinner fa-pulse"></i>&nbsp; Loading...<span class="sr-only">| Loading...</span></span></div>
+                <div ng-if="!volume.loading &amp;&amp; volume.detail &amp;&amp; volume.showDetail" class="volume-detail col-sm-12">
+                  <h3 class="text-muted">当前数据卷详情</h3>
+                  <table class="table table-bordered">
+                    <tbody>
+                      <tr ng-repeat="(key, value) in volume.detail">
+                        <td>{{ key }}</td>
+                        <td ng-if="key!='Engine'"><span class="value">{{ value }}</span></td>
+                        <td ng-if="key=='Engine'">
+                          <ul>
+                            <li ng-repeat="(engineK, engineV) in value"><span ng-if="engineK!='Labels'" class="value pull-right">{{ engineV }}</span><span>{{ engineK }}</span><span ng-if="engineK=='Labels'" class="engineK">
+                                <ul>
+                                  <li ng-repeat="(labelK, labelV) in engineV"><span class="value pull-right">{{ labelV }}</span><span>{{ labelK }} </span></li>
+                                </ul></span></li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <button ng-click="loadMoreVolume()" ng-if="options.currentPage &lt; volumes.pagesNum" ng-disabled="loading.volumesMore" tabindex="0" class="btn-more btn"><span ng-if="!loading.volumesMore">加载更多</span><span ng-if="loading.volumesMore"><i class="fa fa-spinner fa-pulse">                           </i></span></button>
+          </div>
+        </tab>
+      </tabset>
+    </section>
+  </div>
+</div>

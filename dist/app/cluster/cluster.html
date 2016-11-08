@@ -1,0 +1,70 @@
+
+<div ng-if="load.loaded" class="content-body cluster">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel container-msg">
+          <section class="panel-body">
+            <h3><i aria-hidden="true" class="fa fa-cubes"></i>集群容器信息概要</h3>
+            <div class="chart">
+              <cmchart chart-option="swarm.container.option" style="width:600px; height:400px; position:relative; display:block"></cmchart>
+              <div class="description container">
+                <div style="margin-left:35%"><span class="has">共计 {{ swarm.container.nums }}个容器应用</span></div>
+                <div style="margin-left:5%"><span class="running used">{{ swarm.container.running }}个主机处于运行状态</span><span class="paused">{{ swarm.container.paused }}个处于暂停状态</span><span class="stop">{{ swarm.container.stop }}个处于停止状态</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel image-msg">
+              <section class="panel-body">
+                <h3><i aria-hidden="true" class="fa fa-file"></i>镜像</h3>
+                <p><strong>{{ swarm.imageNums }}</strong>个本地镜像</p>
+              </section>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel volume-msg">
+              <section class="panel-body">
+                <h3><i aria-hidden="true" class="fa fa-database"></i>存储卷</h3>
+                <p><strong>{{ swarm.volumeNums }}</strong>个本地存储卷</p>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel host-msg">
+          <section class="panel-body">
+            <h3><i aria-hidden="true" class="fa fa-server"></i>主机概况</h3>
+            <div>
+              <div class="chart">
+                <cmchart chart-option="swarm.host.option" style="width:400px; height:400px; position:relative; display:block"></cmchart>
+                <div class="description"><span class="has">共计 {{ swarm.nodes }}个主机</span><br/><span>其中 {{ swarm.healtynodes}} 个主机处于健康状态</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="chart">
+                <cmchart chart-option="swarm.cpu.option" style="width:400px; height:400px; position:relative; display:block"></cmchart>
+                <div class="description"><span class="has">可分配 {{ swarm.cpu.has }} core</span><br/><span class="used">已使用　{{ swarm.cpu.use }} core</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="chart">
+                <cmchart chart-option="swarm.mem.option" style="width:400px; height:400px; position:relative; display:block"></cmchart>
+                <div class="description"><span class="has">可分配 {{ swarm.mem.has }} GB</span><br/><span class="used">已使用　{{ swarm.mem.use }} GB</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

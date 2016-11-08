@@ -1,0 +1,20 @@
+
+<div ng-include="app/components/slidebar/slidebar.html">
+  <div class="setting-box">
+    <div class="settings-container">
+      <h2 class="title">设置</h2>
+      <hr/>
+      <div class="profile">
+        <div class="control-group">
+          <div name="settingForm" ng-submit="mdUser(settingForm)" novalidate="novalidate" class="settings-form">
+            <div class="form-group">
+              <label class="control-label">昵称</label>
+              <input type="text" required="required" nickname="nickname" placeholder="2-15字符，中英文、数字和下划线" class="form-control"/>
+            </div>
+            <button type="submit" class="btn btn-block btn-lg btn-primary"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

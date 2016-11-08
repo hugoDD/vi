@@ -1,0 +1,59 @@
+
+<div class="modal-header">
+  <div class="modal-title">增加用户</div>
+</div>
+<div class="modal-body">
+  <div class="portlet-body form">
+    <form name="addUserForm" novalidate="novalidate" class="addUserForm form-horizontal">
+      <div class="form-body">
+        <div class="form-group">
+          <label class="control-label col-md-4">nickname </label>
+          <div class="col-sm-6">
+            <input type="text" placeholder="昵称" autocomplete="off" ng-model="user.nickname" required="required" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-4">Email</label>
+          <div class="col-sm-6">
+            <input type="email" placeholder="邮箱" autocomplete="off" ng-model="user.email" required="required" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-4">Password</label>
+          <div class="col-sm-6">
+            <input type="password" placeholder="密码" autocomplete="off" ng-model="user.password" required="required" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-4">状态</label>
+          <div class="col-sm-8">
+            <label class="radio-inline">
+              <input type="radio" ng-model="user.status" value="1"/>Authenticated
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="user.status" value="0"/>Unverified
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="user.status" value="2"/>Blocked
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-4">角色</label>
+          <div class="col-sm-8">
+            <label class="radio-inline">
+              <input type="radio" ng-model="user.role" value="user"/>user(普通用户)
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="user.role" value="admin"/>admin(管理员)
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <div ng-disabled="addUserForm.$invalid" ng-click="ok(addUserForm)" class="btn btn-primary">OK</div>
+  <div ng-click="cancel()" class="btn btn-warning">Cancel</div>
+</div>

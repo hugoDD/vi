@@ -1,0 +1,74 @@
+
+<div ng-if="load.loaded" class="content-body">
+  <div class="panel panel-default panel-page-header">
+    <div class="panel-body">
+      <div class="primary-section">
+        <h2> 镜像仓库</h2>
+        <p>这里是容器镜像的仓库,仓库里目前汇聚了集群已经下载和部署的镜像文件（并支持搜寻dockerhub上的镜像并下载）</p>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <section class="panel-body">
+      <tabset>
+        <tab index="0" heading="本地镜像">
+          <div class="table-container">
+            <table class="table table-bordered">
+              <thead>
+                <tr> 
+                  <th class="text-center">镜像仓库</th>
+                  <th>镜像用户</th>
+                  <th>镜像名称</th>
+                  <th>标签</th>
+                  <th>创建时间</th>
+                  <th>动作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="image in imagePackages.results | orderBy: '-time'">
+                  <td class="text-center">{{ image.repo }}</td>
+                  <td>{{ image.username }}</td>
+                  <td>{{ image.name  }}</td>
+                  <td>{{ image.tag }}</td>
+                  <td>{{ image.time | date:'yyyy-MM-dd HH:mm' }}</td>
+                  <td>
+                    <button ng-click="createContainerInstance(image)" class="btn btn-primary">创建应用</button><span ng-click="delImage(image)" class="btn delete-image-btn"><i class="fa fa-trash fa-2x"></i></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button ng-click="loadMore()" ng-if="options.currentPage &lt; imagePackages.numPages" ng-disabled="imagePackages.isLoading" tabindex="0" class="btn-more btn"><span ng-if="!imagePackages.isLoading">加载更多</span><span ng-if="imagePackages.isLoading"><i class="fa fa-spinner fa-pulse"></i></span></button>
+          </div>
+        </tab>
+        <tab index="1" heading="DockerHub镜像">
+          <div class="row dockerhub">
+            <h3 class="text-center">Docker镜像</h3>
+            <div class="input-group col-xs-6 col-xs-offset-3">
+              <input placeholder="在这里搜索镜像" ng-model="search.dockerhub.content" ng-keypress="keypressEvent($event)" tabindex="0" class="form-control"/><span ng-click="searchDockerHub()" role="button" tabindex="0" class="input-group-addon">搜索</span>
+            </div>
+          </div>
+          <div ng-if="loading.dockerhub" class="well"><span><i class="fa fa-spinner fa-pulse"></i>&nbsp; Loading...<span class="sr-only">| Loading...</span></span></div>
+          <div ng-if="!loading.dockerhub &amp;&amp; dockerhubPackages &amp;&amp; dockerhubPackages.results.length  === 0 " class="well">没有匹配的 DockerHub 镜像</div>
+          <div ng-if="!loading.dockerhub &amp;&amp; showNeedNetworkMsg"><span class="msg">在线搜索需要确保swarm集群处于联网状态</span></div>
+          <div ng-if="!loading.dockerhub &amp;&amp; dockerhubPackages.results.length &gt; 0">
+            <div class="package-list container-fluid">
+              <div ng-repeat="package in dockerhubPackages.results" class="row package">
+                <div class="col-sm-4"> <img ng-src="/assets/images/container.svg" class="package-icon"/>
+                  <div class="package-heading">
+                    <h3>{{ package.name }}</h3>
+                    <div class="meta"> <span><i class="fa fa-star-o"></i>{{ package.star_count }}</span></div>
+                  </div>
+                </div>
+                <div class="col-sm-4"><span class="text text-muted">{{ package.description }}</span></div>
+                <div class="col-sm-4 text-right">
+                  <button ng-click="createContainerInstance(package.name, true)" ng-disabled="package.loading" class="btn btn-primary">创建应用</button>
+                </div>
+              </div>
+              <button ng-click="loadMoreDockerhub()" ng-if="options.currentPageForDockerhub &lt; dockerhubPackages.pagesNum" ng-disabled="loading.dockerhubMore" tabindex="0" class="btn-more btn"><span ng-if="!loading.dockerhubMore">加载更多</span><span ng-if="loading.dockerhubMore"><i class="fa fa-spinner fa-pulse"></i></span></button>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+    </section>
+  </div>
+</div>

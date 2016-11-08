@@ -1,0 +1,25 @@
+
+<div ng-controller="navBarCtrl" class="ui navbar">
+  <ul class="nav nav-pills nav-stacked">
+    <li><a tooltip-placement="right" tooltip="控制台" tooltip-append-to-body="true" ui-sref="dashboard" class="text-center">
+        <svg alt="控制台">
+          <use xlink:href="{{ currentUrl.docker }}"></use>
+        </svg></a></li>
+    <li ng-class="{'active': navs[0].active}"><a tooltip-placement="right" tooltip="集群状况" tooltip-append-to-body="true" ui-sref="cluster" class="text-center"> 
+        <svg alt="集群状况">
+          <use xlink:href="{{ currentUrl.server }}"></use>
+        </svg></a></li>
+    <li ng-class="{'active': navs[1].active}"><a tooltip-placement="right" tooltip="镜像列表" tooltip-append-to-body="true" ui-sref="imageList" class="text-center">
+        <svg alt="镜像列表">
+          <use xlink:href="{{ currentUrl.shop }}"></use>
+        </svg></a></li>
+    <li ng-class="{'active': navs[2].active}"><a tooltip-placement="right" tooltip="容器列表" tooltip-append-to-body="true" ui-sref="containerList" class="text-center">
+        <svg alt="容器列表">
+          <use xlink:href="{{ currentUrl.applist }}"></use>
+        </svg></a></li>
+    <li ng-class="{'active': navs[3].active}"> <a tooltip-placement="right" tooltip="数据卷" tooltip-append-to-body="true" ui-sref="volume" class="text-center">
+        <svg alt="数据卷">
+          <use xlink:href="{{ currentUrl.volume }}"></use>
+        </svg></a></li>
+  </ul>
+</div>

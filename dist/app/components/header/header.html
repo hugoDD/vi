@@ -1,0 +1,14 @@
+
+<nav ng-controller="headerCtrl" class="navbar">
+  <div ng-class="{ 'vi-container' : pageClass != 'dashboard', 'container': pageClass == 'dashboard' }">
+    <div class="navbar-text navbar-right userbar">
+      <div ng-class="{'open' : dropdown.hover}" ng-mouseover="dropdown.hover=true;" ng-mouseleave="dropdown.hover=false;" dropdown="dropdown" class="btn-group">
+        <button type="button" dropdown-toggle="dropdown-toggle" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><img ng-src="{{ default_avatar }}" class="userbar-img"/>{{ user.nickname }}<i class="fa fa-angle-down"></i></button>
+        <ul role="menu" class="dropdown-menu">
+          <li ng-if="user.role === 'admin'"><a href="href" ng-click="manageUser()" tabindex="0">管理用户</a></li>
+          <li><a href="#" ng-click="logout()" tabindex="0">登出 </a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

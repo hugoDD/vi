@@ -1,0 +1,23 @@
+
+<div ng-if="load.loaded" class="main">
+  <div class="container">
+    <div class="app-list"><a id="cluster" ui-sref="cluster" title="集群资源使用情况" class="icon-view"> 
+        <div class="icon-wrapper">
+          <div class="icon-img"><img ng-src="/assets/images/server.svg" alt="集群状况"/></div>
+          <div class="icon-name">集群状况</div>
+        </div></a><a id="containerList" ui-sref="containerList" title="集群容器应用列表" class="icon-view">
+        <div class="icon-wrapper">
+          <div class="icon-img"><img ng-src="/assets/images/applist.svg" alt="容器列表"/></div>
+          <div class="icon-name">应用列表</div>
+        </div></a><a id="imageList" ui-sref="imageList" title="集群容器镜像列表" class="icon-view"> 
+        <div class="icon-wrapper">
+          <div class="icon-img"><img ng-src="/assets/images/shop.svg" alt="镜像列表"/></div>
+          <div class="icon-name">镜像列表</div>
+        </div></a><a id="volume" ui-sref="volume" title="数据卷" class="icon-view">
+        <div class="icon-wrapper">
+          <div class="icon-img"><img ng-src="/assets/images/volume.svg" alt="数据卷"/></div>
+          <div class="icon-name">数据卷</div>
+        </div></a></div>
+    <div class="wallpaper"></div>
+  </div>
+</div>

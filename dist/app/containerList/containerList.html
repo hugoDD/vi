@@ -1,0 +1,63 @@
+
+<div ng-if="load.loaded" class="content-body container-list">
+  <div class="panel panel-default panel-page-header">
+    <div class="panel-body">
+      <div class="primary-section">
+        <h2> 应用管理</h2>
+        <p>这里通过表格的形式显示出SWARM集群中已经部署的所有的容器应用</p>
+      </div>
+      <div class="secondary-section">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12">
+            <h4>如何在SRARM集群中部署您的容器应用?</h4>
+            <p>您可以从镜像仓库中挑选镜像(目前只支持swarm集群中已有的镜像)并生成容器应用<a ui-sref="imageList">镜像列表</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <section class="panel-body">
+      <div class="table-container">
+        <div class="table-toolbar">
+          <div class="btn-group">
+            <button ng-if="checkedItem" ng-click="deleteCheckedApp()" tabindex="0" class="btn btn-danger">删除</button>
+          </div>
+        </div>
+        <div class="table main">
+          <table class="table table-bordered">
+            <thead>
+              <tr> 
+                <th></th>
+                <th class="left">名称</th>
+                <th class="text-center">运行节点</th>
+                <th class="text-center">状态</th>
+                <th class="text-center">所属镜像</th>
+                <th class="text-center">创建时间</th>
+                <th class="text-center">动作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="container in containerList | orderBy: '-Created'" ng-class="{'selected' : container.check, 'new' : newContainer &amp;&amp; newContainer.name == container.name }">
+                <td class="checkbox">
+                  <div>
+                    <input type="checkbox" ng-model="container.check" ng-change="checkItem(container)" tabindex="0"/>
+                  </div>
+                </td>
+                <td class="left"><span>{{ container.name }}</span><span ng-if="newContainer &amp;&amp; newContainer.name == container.name" style="color:#F6566B">(New)</span></td>
+                <td class="text-center"> <span>{{ container.node }} </span></td>
+                <td class="text-center"><span ng-if="container.status == 'running'" class="state-label play item-success">运行中</span><span ng-if="container.status =='stop'" class="state-label">
+                     
+                    停止</span><span ng-if="container.status== 'error'" class="state-label error">应用异常</span></td>
+                <td class="text-center"> <span>{{ container.Image }}</span><br/><span class="item-tag"><i class="fa fa-tag"> </i>&nbsp;{{container.imageTag }}</span></td>
+                <td class="text-center">{{ container.Created*1000 | date:'yyyy-MM-dd HH:mm' }}</td>
+                <td class="text-center"><a ui-sref="containerDetail({id: container.name })">查看详情</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <paging page="options.currentPage" page-size="options.itemsPerPage" total="containerCount" dots="......" hide-if-empty="true" show-prev-next="true" paging-action="loadMore(page)"></paging>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

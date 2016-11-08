@@ -1,0 +1,96 @@
+
+.content-body(ng-if="load.loaded")
+    .panel.panel-default.panel-page-header
+        .panel-body
+            div.img-container
+                img.img-responsive(ng-src="/assets/images/volume-normal.svg")
+            div.img-msg
+                div.img-title
+                    h2 Volume
+                    div.sub-title.text-muted 容器持久化数据、共享数据的存储空间
+                    button.btn.btn-primary(ng-click="createVolume()" tabindex="0") 创建数据卷
+
+            
+    .panel
+        section.panel-body
+            tabset(active="1")
+                tab(index="0" heading="概览")
+                    div.markdown-body
+                        p 一个 Volume 就是在一个或者多个容器里有特殊用途的目录。它绕过了容器内部的文件系统为持久化数据、共享数据提供了下面这些有用的特性：
+                        ul
+                            li 容器可以通过把数据写在 Volume 上来实现数据持久化
+                            li Volume 可以在不同的容器之间共享和重用数据
+                            li 容器数据的备份、恢复和迁移都可以通过 Volume 实现
+                            li 通过 Volume 实现多容器共享数据，从而实现应用的横向扩展
+                tab(index="1" heading="集群Volume" active="isFirst")
+                    .volume-toolbar
+                        .row
+                            .col-xs-12.col-sm-12
+                                form.form-inline
+                                    .form-group
+                                        label(for="volumeName") volume名称
+                                        input#volumeName.form-control(type="search" ng-model="search.volume.name" ng-keyup="searchVolume()" placeholder="数据卷名称" tabindex="0")
+                                    .form-group
+                                        label(for="volumeNode") 所在节点(宿主)
+                                        input#volumeName.form-control(type="search" ng-model="search.volume.node" ng-keyup="searchVolume()" placeholder="节点名称" tabindex="0")
+                                    button.btn.btn-primary(type="submit" ng-click="searchVolume()") 搜索
+                                        
+                    .alert(ng-if="(!volumes.results || volumes.results.length === 0) && !search.volume.loading")
+                        span Volumes为空或者没有符合条件的Volume
+                    div.well.clear(ng-if="search.volume.loading")
+                        span
+                            i.fa.fa-spinner.fa-pulse
+                            | &nbsp; Loading...
+                            span.sr-only | Loading...
+                    div(ng-if="volumes.results.length > 0 && !search.volume.loading")
+                        div.volumes-list.container-fluid
+                            div.row
+                                div.volume-heading.col-sm-4 名称
+                                div.volume-heading.col-sm-4 所在节点(宿主)
+                                div.volume-heading.col-sm-4 动作
+                            div.row.volumes.clearfix(ng-repeat="volume in volumes.results")
+                                div.volume.col-sm-4.flex-vertical-box {{ volume.name }}
+                                div.volume.col-sm-4.flex-vertical-box {{ volume.node }}
+                                div.volume.col-sm-4.flex-vertical-box
+                                    div.btn-group(dropdown)
+                                        button.btn.btn-default(ng-click='viewDetail(volume)' ng-disabled="volume.loading" ng-if="!volume.showDetail") 查看详情
+                                        button.btn.btn-default(ng-click='volume.showDetail=!volume.showDetail' ng-disabled="volume.loading" ng-if="volume.showDetail") 隐藏
+                                        button.btn.btn-default(dropdown-toggle)
+                                            span.fa.fa-caret-down(ng-if="!volume.showDetail")
+                                            span.fa.fa-caret-up(ng-if="volume.showDetail")
+                                        ul.dropdown-menu(dropdown-menu role="menu")
+                                            li(role="menuitem")
+                                                a(ng-click='removeVolume(volume)') 删除
+                                div.well.clear(ng-if="volume.loading")
+                                    span
+                                        i.fa.fa-spinner.fa-pulse
+                                        | &nbsp; Loading...
+                                        span.sr-only | Loading...
+                                div.volume-detail.col-sm-12(ng-if="!volume.loading && volume.detail && volume.showDetail")
+                                    h3.text-muted 当前数据卷详情
+                                    table.table.table-bordered
+                                        tbody
+                                            tr(ng-repeat="(key, value) in volume.detail")
+                                                td {{ key }}
+                                                    
+                                                td(ng-if="key!='Engine'")
+                                                    span.value {{ value }}
+                                                td(ng-if="key=='Engine'")
+                                                    ul
+                                                        li(ng-repeat="(engineK, engineV) in value")
+                                                            span.value.pull-right(ng-if="engineK!='Labels'") {{ engineV }}
+                                                            span {{ engineK }}
+                                                            span.engineK(ng-if="engineK=='Labels'")
+                                                                ul
+                                                                    li(ng-repeat="(labelK, labelV) in engineV")
+                                                                        span.value.pull-right {{ labelV }}
+                                                                        span {{ labelK }} 
+                        button.btn-more.btn(ng-click="loadMoreVolume()" ng-if="options.currentPage < volumes.pagesNum" ng-disabled="loading.volumesMore" tabindex="0")
+                            span(ng-if="!loading.volumesMore") 加载更多
+                            span(ng-if="loading.volumesMore")
+                                i.fa.fa-spinner.fa-pulse                            
+                                                
+                                    
+                                    
+                                
+                            
